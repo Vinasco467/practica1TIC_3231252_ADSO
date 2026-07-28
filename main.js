@@ -43,6 +43,8 @@ function startGame() {
   }
 }
 
+document.querySelector("#restart").onclick = restartGame;
+
 function renderPlayer() {
   if (gameOver) {
     return;
@@ -268,16 +270,44 @@ function finishGame(result) {
   });
   switch (result) {
     case "playerwon":
-      document.querySelector("#player").textContent = "🎉 ¡Ganó el Jugador!";
+      document.querySelector("#player").textContent = "¡Ganó el Jugador!";
       break;
 
     case "pcwon":
-      document.querySelector("#player").textContent = "🤖 ¡Ganó la PC!";
+      document.querySelector("#player").textContent = "¡Ganó la PC!";
       break;
 
     case "draw":
-      document.querySelector("#player").textContent = "🤝 ¡Empate!";
+      document.querySelector("#player").textContent = "¡Empate!";
       break;
 
   }
+}
+
+function restartGame() {
+
+  board = [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
+  ];
+
+  gameOver = false;
+
+  pcSolutions = [];
+
+  decisionThree = null;
+
+  renderBoard();
+
+  turn = Math.random() <= 0.5 ? 0 : 1;
+
+  renderPlayer();
+
+  if (turn === 0) {
+    playerPlays();
+  } else {
+    PCPlaysV2();
+  }
+
 }
