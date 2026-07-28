@@ -134,6 +134,9 @@ function playerPlays() {
     const row = i % 3;
     const column = parseInt(i / 3);
     buttonCell.onclick = () => {
+      if (gameOver) {
+        return;
+      }
       if (board[column][row] !== "") {
         return;
       }
