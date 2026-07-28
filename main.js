@@ -16,6 +16,7 @@ let board = [
 ];
 
 let turn = 0; //0 user, 1 = pc
+let gameOver = false;
 
 function renderBoard() {
   const html = board.map((row) => {
@@ -135,15 +136,17 @@ function playerPlays() {
     const column = parseInt(i / 3);
     if (board[column][row] === "") {
       buttonCell.addEventListener("click", (e) => {
-        board[column][row] = "O";
-        buttonCell.textContent = board[column][row];
-        turn = 1;
-        const won = checkIfWinner();
-        debugger;
-        if (won === "none") {
-          PCPlaysV2();
-        }
-      });
+    if (gameOver) {
+        return;
+    }
+    board[column][row] = "O";
+    buttonCell.textContent = board[column][row];
+    turn = 1;
+    const won = checkIfWinner();
+    if (won === "none") {
+        PCPlaysV2();
+    }
+});
     }
   });
 }
