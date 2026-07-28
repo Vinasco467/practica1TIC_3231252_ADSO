@@ -178,9 +178,15 @@ function checkIfWinner() {
     return "pcwon";
   }
   if (playerWon.includes(true)) {
+    gameOver = true;
+
+    document.querySelectorAll(".cell").forEach((cell) => {
+        cell.onclick = null;
+    });
+
     console.log("Player WON");
     return "playerwon";
-  }
+}
   return "none";
 }
 function checkIfPCWinner(arr) {
