@@ -87,14 +87,16 @@ function PCPlaysV2() {
     renderBoard();
     renderPlayer();
     const won = checkIfWinner();
-    if (won === "none") {
-      if (checkDraw()) {
-        gameOver = true;
-        return;
-      }
-      pcSolutions = [];
-      playerPlays();
+    if (won === "pcwon") {
+      finishGame("pcwon");
+      return;
     }
+    if (won === "draw") {
+      finishGame("draw");
+      return;
+    }
+    pcSolutions = [];
+    playerPlays();
   } else {
     console.log("Empate...");
   }
@@ -156,13 +158,15 @@ function playerPlays() {
       turn = 1;
       renderPlayer();
       const won = checkIfWinner();
-      if (won === "none") {
-        if (checkDraw()) {
-          gameOver = true;
-          return;
-        }
-        PCPlaysV2();
+      if (won === "playerwon") {
+        finishGame("playerwon");
+        return;
       }
+      if (won === "draw") {
+        finishGame("draw");
+        return;
+      }
+      PCPlaysV2();
     };
   });
 }
@@ -255,4 +259,25 @@ function checkDraw() {
   }
 
   return true;
+}
+
+function finishGame(result) {
+  gameOver = true;
+  document.querySelectorAll(".cell").forEach((cell) => {
+    cell.onclick = null;
+  });
+  switch (result) {
+    case "playerwon":
+      document.querySelector("#player").textContent = "🎉 ¡Ganó el Jugador!";
+      break;
+
+    case "pcwon":
+      document.querySelector("#player").textContent = "🤖 ¡Ganó la PC!";
+      break;
+
+    case "draw":
+      document.querySelector("#player").textContent = "🤝 ¡Empate!";
+      break;
+
+  }
 }
