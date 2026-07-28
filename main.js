@@ -67,9 +67,7 @@ function PCPlaysV2() {
   const copy = JSON.parse(JSON.stringify(board));
   const root = new Node(copy);
   processNode(root, true, 0);
-
   console.log("final", root);
-
   if (pcSolutions.length > 0) {
     let min = 100;
     for (let i = 0; i < pcSolutions.length; i++) {
@@ -87,16 +85,25 @@ function PCPlaysV2() {
     console.log({ board });
     turn = 0;
     renderBoard();
+    document.querySelectorAll(".cell").forEach((cell, i) => {
+      const row = i % 3;
+      const column = parseInt(i / 3);
+      if (board[column][row] === "X") {
+        cell.classList.add("animate");
+      }
+    });
     renderPlayer();
     const won = checkIfWinner();
     if (won === "pcwon") {
       finishGame("pcwon");
       return;
     }
-    if (won === "draw") {
+    if (checkDraw()) {
       finishGame("draw");
       return;
     }
+    pcSolutions = [];
+    playerPlays();
     pcSolutions = [];
     playerPlays();
   } else {
@@ -156,6 +163,7 @@ function playerPlays() {
       if (board[column][row] !== "") return;
       board[column][row] = "O";
       buttonCell.textContent = "O";
+      buttonCell.classList.add("animate");
       buttonCell.onclick = null;
       turn = 1;
       renderPlayer();
@@ -164,7 +172,7 @@ function playerPlays() {
         finishGame("playerwon");
         return;
       }
-      if (won === "draw") {
+      if (checkDraw()) {
         finishGame("draw");
         return;
       }

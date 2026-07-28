@@ -16,3 +16,25 @@ body {
   font-size: 38px;
   font-weight: bold;
 }
+
+.cell {
+  transition: transform 0.2s ease;
+}
+
+.cell.animate {
+  animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+  0% {
+    transform: scale(0);
+  }
+
+  60% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
