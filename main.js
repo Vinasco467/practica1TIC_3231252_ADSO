@@ -44,8 +44,14 @@ function startGame() {
 }
 
 function renderPlayer() {
-  document.querySelector("#player").textContent = `${turn === 0 ? "Player turn" : "PC turn"
-    }`;
+  if (gameOver) {
+    return;
+  }
+  if (turn === 0) {
+    document.querySelector("#player").textContent = "Turno del Jugador";
+  } else {
+    document.querySelector("#player").textContent = "Turno de la PC";
+  }
 }
 
 function PCPlays() {
@@ -148,6 +154,7 @@ function playerPlays() {
       buttonCell.textContent = "O";
       buttonCell.onclick = null;
       turn = 1;
+      renderPlayer();
       const won = checkIfWinner();
       if (won === "none") {
         if (checkDraw()) {
