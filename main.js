@@ -133,15 +133,17 @@ function playerPlays() {
   document.querySelectorAll(".cell").forEach((buttonCell, i) => {
     const row = i % 3;
     const column = parseInt(i / 3);
+    // Si la casilla ya está ocupada se deshabilitara
+    if (board[column][row] !== "") {
+      buttonCell.onclick = null;
+      return;
+    }
     buttonCell.onclick = () => {
-      if (gameOver) {
-        return;
-      }
-      if (board[column][row] !== "") {
-        return;
-      }
+      if (gameOver) return;
+      if (board[column][row] !== "") return;
       board[column][row] = "O";
-      buttonCell.textContent = board[column][row];
+      buttonCell.textContent = "O";
+      buttonCell.onclick = null;
       turn = 1;
       const won = checkIfWinner();
       if (won === "none") {
