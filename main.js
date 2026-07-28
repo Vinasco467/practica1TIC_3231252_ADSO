@@ -44,9 +44,8 @@ function startGame() {
 }
 
 function renderPlayer() {
-  document.querySelector("#player").textContent = `${
-    turn === 0 ? "Player turn" : "PC turn"
-  }`;
+  document.querySelector("#player").textContent = `${turn === 0 ? "Player turn" : "PC turn"
+    }`;
 }
 
 function PCPlays() {
@@ -83,6 +82,10 @@ function PCPlaysV2() {
     renderPlayer();
     const won = checkIfWinner();
     if (won === "none") {
+      if (checkDraw()) {
+        gameOver = true;
+        return;
+      }
       pcSolutions = [];
       playerPlays();
     }
@@ -147,6 +150,10 @@ function playerPlays() {
       turn = 1;
       const won = checkIfWinner();
       if (won === "none") {
+        if (checkDraw()) {
+          gameOver = true;
+          return;
+        }
         PCPlaysV2();
       }
     };
@@ -183,12 +190,12 @@ function checkIfWinner() {
     gameOver = true;
 
     document.querySelectorAll(".cell").forEach((cell) => {
-        cell.onclick = null;
+      cell.onclick = null;
     });
 
     console.log("Player WON");
     return "playerwon";
-}
+  }
   return "none";
 }
 function checkIfPCWinner(arr) {
@@ -226,4 +233,19 @@ function getRoot(node) {
   }
 
   return n;
+}
+
+function checkDraw() {
+
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+
+      if (board[i][j] === "") {
+        return false;
+      }
+
+    }
+  }
+
+  return true;
 }
