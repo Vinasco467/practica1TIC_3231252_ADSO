@@ -130,24 +130,21 @@ function createChild(node, i, j, nturn, level) {
 
 function playerPlays() {
   console.log("player plays");
-
   document.querySelectorAll(".cell").forEach((buttonCell, i) => {
     const row = i % 3;
     const column = parseInt(i / 3);
-    if (board[column][row] === "") {
-      buttonCell.addEventListener("click", (e) => {
-    if (gameOver) {
+    buttonCell.onclick = () => {
+      if (board[column][row] !== "") {
         return;
-    }
-    board[column][row] = "O";
-    buttonCell.textContent = board[column][row];
-    turn = 1;
-    const won = checkIfWinner();
-    if (won === "none") {
+      }
+      board[column][row] = "O";
+      buttonCell.textContent = board[column][row];
+      turn = 1;
+      const won = checkIfWinner();
+      if (won === "none") {
         PCPlaysV2();
-    }
-});
-    }
+      }
+    };
   });
 }
 
